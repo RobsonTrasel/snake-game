@@ -97,7 +97,27 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void checkCollisions() {
+        for(int i = bodyParts; i > 0; i--) {
+            if((x[0] == x[i]) && (y[0] == y[i])) {
+                running = false;
+            }
+        }
 
+        if(x[0] < 0) {
+            running = false;
+        }
+        if(x[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+        if(y[0] < 0) {
+            running = false;
+        }
+        if(y[0] > SCREEN_HEIGHT) {
+            running = false;
+        }
+        if(running == false) {
+            timer.stop();
+        }
     }
 
     public void gameOver(Graphics g) {
@@ -106,7 +126,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(running) {
+            move();
+            checkApple();
+            checkCollisions();
+        }
+        repaint();
     }
 
     public class myKeyAdapter extends KeyAdapter {
